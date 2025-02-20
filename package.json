@@ -1,6 +1,6 @@
 {
   "name": "six-cities",
-  "version": "5.0.0",
+  "version": "0.1.2",
   "description": "Проект «Шесть городов» от HTML Academy",
   "keywords": [
     "rest",
@@ -30,5 +30,8 @@
   "engines": {
     "node": "^18.0.0",
     "npm": ">=8"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1"
   }
 }
