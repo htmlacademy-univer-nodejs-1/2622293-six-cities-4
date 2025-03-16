@@ -1,0 +1,71 @@
+{
+  "api": {
+    "offers": [
+      {
+        "title": "Уютная квартира в центре города",
+        "description": "Просторная и светлая квартира рядом с основными достопримечательностями и удобствами города.",
+        "publicationDate": "2025-03-15T12:00:00Z",
+        "city": "Paris",
+        "previewImage": "https://example.com/images/preview1.jpg",
+        "housingPhotos": [
+          "https://example.com/images/photo1.jpg",
+          "https://example.com/images/photo2.jpg",
+          "https://example.com/images/photo3.jpg",
+          "https://example.com/images/photo4.jpg",
+          "https://example.com/images/photo5.jpg",
+          "https://example.com/images/photo6.jpg"
+        ],
+        "isPremium": true,
+        "isFavorite": false,
+        "rating": 4.5,
+        "housingType": "apartment",
+        "numberOfRooms": 3,
+        "numberOfGuests": 4,
+        "rentalCost": 8500,
+        "amenities": ["Wi-Fi", "Heating", "Kitchen"],
+        "author": "user-1",
+        "commentCount": 2,
+        "coordinates": {
+          "latitude": 48.8566,
+          "longitude": 2.3522
+        }
+      }
+    ],
+    "comments": [
+      {
+        "text": "Очень понравилось жильё, чисто и уютно!",
+        "publicationDate": "2025-03-14T10:30:00Z",
+        "rating": 5,
+        "author": "user-2"
+      },
+      {
+        "text": "Хорошее расположение, но немного шумно.",
+        "publicationDate": "2025-03-13T16:45:00Z",
+        "rating": 4,
+        "author": "user-3"
+      }
+    ],
+    "users": [
+      {
+        "name": "Анна",
+        "email": "anna@example.com",
+        "avatar": "https://example.com/avatars/anna.jpg",
+        "password": "secure12",
+        "userType": "pro"
+      },
+      {
+        "name": "Иван",
+        "email": "ivan@example.com",
+        "password": "pass1234",
+        "userType": "normal"
+      },
+      {
+        "name": "Мария",
+        "email": "maria@example.com",
+        "avatar": "https://example.com/avatars/maria.png",
+        "password": "mypwd678",
+        "userType": "normal"
+      }
+    ]
+  }
+}
