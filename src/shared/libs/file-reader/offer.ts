@@ -24,19 +24,15 @@ function parseCoordinates(coordinates: string): Coordinates {
   return { latitude, longitude };
 }
 
-function getParsedHousingPhotos(photos: string) {
-  const parsedPhotosArray = photos.split(',').map((photo) => photo.trim());
-  const parsedHousingPhotos: [string, string, string, string, string, string] =
-    [
-      parsedPhotosArray[0] || '',
-      parsedPhotosArray[1] || '',
-      parsedPhotosArray[2] || '',
-      parsedPhotosArray[3] || '',
-      parsedPhotosArray[4] || '',
-      parsedPhotosArray[5] || '',
-    ];
-
-  return parsedHousingPhotos;
+function getParsedHousingPhotos(
+  photos: string
+): [string, string, string, string, string, string] {
+  return photos
+    .split(',')
+    .map((photo) => photo.trim())
+    .slice(0, 6)
+    .concat(Array(6))
+    .slice(0, 6) as [string, string, string, string, string, string];
 }
 
 export function createOffer(offerData: string): IRentalOffer[] {
