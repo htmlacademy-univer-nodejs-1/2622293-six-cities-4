@@ -37,7 +37,7 @@ export class GenerateCommand implements ICommand {
       await this.write(filepath, offerCount);
       console.info(chalk.green(`File ${filepath} was generated.`));
     } catch (error: unknown) {
-      console.error(chalk.bgRed.white("Can't generate data."));
+      console.error(chalk.bgRed.white('Cant generate data.'));
       if (error instanceof Error) {
         console.error(chalk.red(error.message));
       }
