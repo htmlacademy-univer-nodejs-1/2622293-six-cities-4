@@ -103,8 +103,15 @@ export class ImportCommand implements ICommand {
   }
 
   public async execute(...parameters: string[]): Promise<void> {
-    const [filename, login, password, host, dbname, port] = parameters;
-    const uri = getMongoURI(login, password, host, Number(port), dbname);
+    const [filename, login, password, host, dbname, portArg] = parameters;
+    const port = portArg ? Number(portArg) : 27017; // Если порт не указан, используем стандартный 27017
+
+    // Убедимся, что port является числом и не NaN
+    const validPort = isNaN(port) ? 27017 : port;
+
+    const uri = getMongoURI(login, password, host, validPort, dbname);
+
+    console.log(`Connecting to MongoDB at ${uri}`); // Отладочный вывод
 
     try {
       await this.databaseClient.connect(uri);
