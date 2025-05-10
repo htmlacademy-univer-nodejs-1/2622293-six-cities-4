@@ -6,6 +6,7 @@ import { OfferEntity } from './offer.entity.js';
 import { CreateOfferDto } from './dto/create-offer.dto.js';
 import { UpdateOfferDto } from './dto/update-offer.dto.js';
 import { ILogger } from '../../libs/logger/logger.interface.js';
+import { City, Housing } from '../../types/offer.js';
 
 @injectable()
 export class DefaultOfferService implements IOfferService {
@@ -50,5 +51,79 @@ export class DefaultOfferService implements IOfferService {
 
   public async exists(documentId: string): Promise<boolean> {
     return (await this.offerModel.exists({ _id: documentId })) !== null;
+  }
+
+  public async findPremiumByCity(
+    city: City
+  ): Promise<DocumentType<OfferEntity>[]> {
+    return this.offerModel
+      .find({ city, isPremium: true })
+      .sort({ createdAt: -1 })
+      .limit(4)
+      .exec();
+  }
+
+  public async findByCity(
+    city: City,
+    count?: number
+  ): Promise<DocumentType<OfferEntity>[]> {
+    const limit = count ?? 60;
+    return this.offerModel
+      .find({ city })
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .exec();
+  }
+
+  public async findByHousingType(
+    type: Housing,
+    count?: number
+  ): Promise<DocumentType<OfferEntity>[]> {
+    const limit = count ?? 60;
+    return this.offerModel
+      .find({ housing: type })
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .exec();
+  }
+
+  public async findByAuthor(
+    authorId: string
+  ): Promise<DocumentType<OfferEntity>[]> {
+    return this.offerModel
+      .find({ author: authorId })
+      .sort({ createdAt: -1 })
+      .exec();
+  }
+
+  public async incCommentCount(
+    offerId: string
+  ): Promise<DocumentType<OfferEntity> | null> {
+    return this.offerModel
+      .findByIdAndUpdate(offerId, { $inc: { commentCount: 1 } }, { new: true })
+      .exec();
+  }
+
+  public async findNew(count: number): Promise<DocumentType<OfferEntity>[]> {
+    return this.offerModel.find().sort({ createdAt: -1 }).limit(count).exec();
+  }
+
+  public async findDiscussed(
+    count: number
+  ): Promise<DocumentType<OfferEntity>[]> {
+    return this.offerModel
+      .find()
+      .sort({ commentCount: -1 })
+      .limit(count)
+      .exec();
+  }
+
+  public async updateRating(
+    offerId: string,
+    rating: number
+  ): Promise<DocumentType<OfferEntity> | null> {
+    return this.offerModel
+      .findByIdAndUpdate(offerId, { rating }, { new: true })
+      .exec();
   }
 }

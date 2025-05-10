@@ -19,4 +19,5 @@ export class CreateOfferDto {
     latitude: number;
     longitude: number;
   };
+  public commentCount?: number;
 }

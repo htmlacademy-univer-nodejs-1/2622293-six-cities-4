@@ -91,6 +91,9 @@ export class OfferEntity extends defaultClasses.TimeStamps implements IOffer {
   @prop({ required: true, type: () => Location, _id: false })
   public location!: Location;
 
+  @prop({ default: 0 })
+  public commentCount!: number;
+
   constructor(offerData: IOffer) {
     super();
 
@@ -109,6 +112,7 @@ export class OfferEntity extends defaultClasses.TimeStamps implements IOffer {
     this.amenities = offerData.amenities;
     this.author = offerData.author;
     this.location = offerData.location as Location;
+    this.commentCount = offerData.commentCount ?? 0;
   }
 }
 

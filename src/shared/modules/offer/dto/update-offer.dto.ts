@@ -19,4 +19,6 @@ export class UpdateOfferDto {
     latitude: number;
     longitude: number;
   };
+
+  public commentCount?: number;
 }
