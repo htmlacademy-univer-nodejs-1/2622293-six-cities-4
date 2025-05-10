@@ -1,0 +1,302 @@
+openapi: 3.0.0
+info:
+  title: Api сервер для проекта "Шесть городов"
+  description: |
+    Список ресурсов и маршрутов сервера "Шесть городов"
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  version: 2.0.0
+tags:
+  - name: Offers
+    description: |
+      Список ресурсов и маршрутов сервера "Шесть городов"
+  - name: Users
+    description: |
+      Список ресурсов и маршрутов сервера "Шесть городов"
+  - name: Comments
+    description: |
+      Список ресурсов и маршрутов сервера "Шесть городов"
+
+paths:
+  /users/register:
+    post:
+      tags:
+        - Users
+      summary: Регистрация пользователя
+      description: Регистрирует нового пользователя
+
+      requestBody:
+        description: Данные для регистрации
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Пользователь успешно зарегистрирован
+        '400':
+          description: Некорректные данные
+        '409':
+          description: Пользователь с таким email уже существует
+
+  /users/login:
+    post:
+      tags:
+        - Users
+      summary: Авторизация пользователя
+      description: Авторизует пользователя
+      responses:
+        '200':
+          description: Пользователь успешно авторизован
+        '401':
+          description: Неверные учетные данные
+
+    get:
+      tags:
+        - Users
+      summary: Получение информации о пользователе
+      description: Получает информацию о пользователе по его ID
+      responses:
+        '200':
+          description: Информация о пользователе
+        '401':
+          description: Пользователь не авторизован
+
+  /users/{userId}/avatar:
+    post:
+      summary: Загрузка аватара пользователя
+      description: Загружает аватар для пользователя
+      tags:
+        - Users
+      responses:
+        '200':
+          description: Аватар успешно загружен
+        '400':
+          description: Ошибка при загрузке аватара
+
+  /offers:
+    get:
+      tags:
+        - Offers
+      summary: Получение списка офферов
+      description: Получает список доступных офферов
+      responses:
+        '200':
+          description: Список офферов
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Offer'
+    post:
+      tags:
+        - Offers
+      summary: Создание нового оффера
+      description: Создает новый оффер
+      requestBody:
+        description: Данные для создания оффера
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Offer'
+      responses:
+        '201':
+          description: Оффер успешно создан
+        '400':
+          description: Некорректные данные
+
+  /offers/{offerId}:
+    get:
+      tags:
+        - Offers
+      summary: Получение информации об оффере
+      description: Получает детальную информацию об оффере по его ID
+      responses:
+        '200':
+          description: Оффер найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Offer'
+        '404':
+          description: Оффер не найден
+
+    patch:
+      tags:
+        - Offers
+      summary: Обновление информации об оффере
+      description: Обновляет информацию об оффере по его ID
+      requestBody:
+        description: Данные для обновления оффера
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Offer'
+      responses:
+        '200':
+          description: Оффер успешно обновлен
+        '404':
+          description: Оффер не найден
+        '400':
+          description: Некорректные данные
+
+    delete:
+      tags:
+        - Offers
+      summary: Удаление оффера
+      description: Удаляет оффер по его ID
+      responses:
+        '204':
+          description: Оффер успешно удален
+        '404':
+          description: Оффер не найден
+
+  /offers/{offerId}/comments:
+    get:
+      tags:
+        - Comments
+      summary: Получение комментариев к офферу
+      description: Получает список комментариев для оффера
+      responses:
+        '200':
+          description: Список комментариев
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+        '404':
+          description: Оффер не найден
+
+    post:
+      tags:
+        - Comments
+      summary: Добавление комментария к офферу
+      description: Добавляет новый комментарий к офферу
+      requestBody:
+        description: Данные комментария
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+      responses:
+        '201':
+          description: Комментарий успешно добавлен
+        '400':
+          description: Некорректные данные
+        '404':
+          description: Оффер не найден
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+        name:
+          type: string
+        avatar:
+          type: string
+
+    Offer:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Заголовок оффера
+        description:
+          type: string
+          description: Описание оффера
+        date:
+          type: string
+          format: date-time
+          description: Дата публикации оффера
+        city:
+          type: string
+          enum: [Paris, Cologne, Brussels, Amsterdam, Hamburg, Dusseldorf]
+          description: Город, в котором находится предложение
+        previewImage:
+          type: string
+          description: URL превью-изображения
+        images:
+          type: array
+          items:
+            type: string
+          description: Массив URL изображений оффера
+        isPremium:
+          type: boolean
+          description: Премиум-статус оффера
+        rating:
+          type: number
+          description: Рейтинг оффера
+        housing:
+          type: string
+          enum: [apartment, house, room, hotel]
+          description: Тип жилья
+        rooms:
+          type: integer
+          description: Количество комнат
+        guests:
+          type: integer
+          description: Максимальное количество гостей
+        price:
+          type: number
+          description: Цена за ночь
+        amenities:
+          type: array
+          items:
+            type: string
+            enum:
+              [
+                Breakfast,
+                Air conditioning,
+                Laptop friendly workspace,
+                Baby seat,
+                Washer,
+                Towels,
+                Fridge,
+              ]
+          description: Удобства, доступные в жилье
+        author:
+          type: string
+          description: Автор оффера (ID пользователя)
+        location:
+          type: object
+          properties:
+            latitude:
+              type: number
+            longitude:
+              type: number
+          description: Координаты местоположения
+
+    Comment:
+      type: object
+      properties:
+        text:
+          type: string
+          minLength: 5
+          maxLength: 1024
+          description: Текст комментария
+        publicationDate:
+          type: string
+          format: date-time
+          description: Дата публикации комментария
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+          description: Рейтинг, оставленный в комментарии
+        author:
+          type: string
+          description: Автор комментария (ID пользователя)
