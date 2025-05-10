@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { DocumentType, types } from '@typegoose/typegoose';
-import { FavoriteEntity, FavoriteModel } from './favorite.entity.js';
+import { FavoriteEntity } from './favorite.entity.js';
 import { CreateFavoriteDto } from './dto/create-favorite.dto.js';
 import { IFavoriteService } from './favorite-service.interface.js';
 import { Component } from '../../types/component.enum.js';
