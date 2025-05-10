@@ -43,4 +43,5 @@ export interface IOffer {
     latitude: number;
     longitude: number;
   };
+  commentCount?: number;
 }
