@@ -8,6 +8,9 @@ import {
 import { IConfig } from '../shared/libs/config/config.interface.js';
 import { PinoLogger, RestSchema, RestConfig } from '../shared/libs/index.js';
 import { ILogger } from '../shared/libs/logger/logger.interface.js';
+import { ExceptionFilter } from '../shared/libs/rest/exception-filter/exception-filter.interface.js';
+import { AppExceptionFilter } from '../shared/libs/rest/exception-filter/app-exception-filter.js';
+import { UserController } from '../shared/modules/user/user.controller.js';
 
 export function createRestApplicationContainer(restContainer: Container) {
   restContainer
@@ -26,6 +29,15 @@ export function createRestApplicationContainer(restContainer: Container) {
     .bind<DatabaseClient>(Component.DatabaseClient)
     .to(MongoDatabaseClient)
     .inSingletonScope();
+
+  restContainer
+    .bind<ExceptionFilter>(Component.AppExceptionFilter)
+    .to(AppExceptionFilter)
+    .inSingletonScope();
+
+  restContainer
+    .bind<UserController>(Component.UserController)
+    .to(UserController);
 
   return restContainer;
 }
