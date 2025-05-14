@@ -22,3 +22,4 @@ export class UpdateOfferDto {
 
   public commentCount?: number;
 }
+//фикс билды
