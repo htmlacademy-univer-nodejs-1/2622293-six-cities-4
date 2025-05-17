@@ -28,4 +28,5 @@ export interface IOfferService {
     offerId: string,
     rating: number
   ): Promise<DocumentType<OfferEntity> | null>;
+  incCommentCount(offerId: string): Promise<DocumentType<OfferEntity> | null>;
 }
