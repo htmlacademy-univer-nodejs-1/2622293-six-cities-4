@@ -9,4 +9,7 @@ export class OfferRdo {
 
   @Expose()
   public isPremium: boolean;
+
+  @Expose()
+  public commentCount: number;
 }
