@@ -126,4 +126,16 @@ export class DefaultOfferService implements IOfferService {
       .findByIdAndUpdate(offerId, { rating }, { new: true })
       .exec();
   }
+
+  public async findFavoritesByUser(
+    favoriteIds: string[]
+  ): Promise<DocumentType<OfferEntity>[]> {
+    if (favoriteIds.length === 0) {
+      return [];
+    }
+    return this.offerModel
+      .find({ _id: { $in: favoriteIds } })
+      .sort({ createdAt: -1 })
+      .exec();
+  }
 }
