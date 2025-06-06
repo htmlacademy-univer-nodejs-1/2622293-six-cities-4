@@ -14,7 +14,6 @@ import {
   IsDateString,
   MinLength,
   MaxLength,
-  IsMongoId,
   IsOptional,
 } from 'class-validator';
 import { Type } from 'class-transformer';
@@ -121,9 +120,6 @@ export class UpdateOfferDto {
   })
   public amenities?: Amenities[];
 
-  @IsOptional()
-  @IsString({ message: CreateOfferValidationMessage.author.empty })
-  @IsMongoId({ message: CreateOfferValidationMessage.author.invalidId })
   public author?: string;
 
   @IsOptional()

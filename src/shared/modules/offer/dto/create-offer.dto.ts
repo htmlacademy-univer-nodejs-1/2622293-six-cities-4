@@ -14,7 +14,6 @@ import {
   IsDateString,
   MinLength,
   MaxLength,
-  IsMongoId,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { CreateOfferValidationMessage } from './create-offer.messages.js';
@@ -107,8 +106,6 @@ export class CreateOfferDto {
   })
   public amenities!: Amenities[];
 
-  @IsString({ message: CreateOfferValidationMessage.author.empty })
-  @IsMongoId({ message: CreateOfferValidationMessage.author.invalidId })
   public author!: string;
 
   @ValidateNested({

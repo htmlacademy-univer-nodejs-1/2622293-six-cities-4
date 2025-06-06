@@ -109,4 +109,32 @@ export class DefaultUserService implements UserService {
       .lean()
       .exec() as Promise<DocumentType<UserEntity> | null>;
   }
+
+  public async addToFavorites(
+    userId: string,
+    offerId: string
+  ): Promise<DocumentType<UserEntity> | null> {
+    return this.userModel
+      .findByIdAndUpdate(
+        userId,
+        { $addToSet: { favoriteOffers: offerId } },
+        { new: true }
+      )
+      .lean()
+      .exec() as Promise<DocumentType<UserEntity> | null>;
+  }
+
+  public async removeFromFavorites(
+    userId: string,
+    offerId: string
+  ): Promise<DocumentType<UserEntity> | null> {
+    return this.userModel
+      .findByIdAndUpdate(
+        userId,
+        { $pull: { favoriteOffers: offerId } },
+        { new: true }
+      )
+      .lean()
+      .exec() as Promise<DocumentType<UserEntity> | null>;
+  }
 }

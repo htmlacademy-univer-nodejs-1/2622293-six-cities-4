@@ -30,4 +30,12 @@ export interface UserService {
     userId: string,
     avatarPath: string
   ): Promise<DocumentType<UserEntity> | null>;
+  addToFavorites(
+    userId: string,
+    offerId: string
+  ): Promise<DocumentType<UserEntity> | null>;
+  removeFromFavorites(
+    userId: string,
+    offerId: string
+  ): Promise<DocumentType<UserEntity> | null>;
 }
